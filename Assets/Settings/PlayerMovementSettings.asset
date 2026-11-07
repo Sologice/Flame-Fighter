@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc426f8037d2d5b4c8b0672b18d36516, type: 3}
+  m_Name: PlayerMovementSettings
+  m_EditorClassIdentifier: Assembly-CSharp::FlameFighter.Player.PlayerMovementSettings
+  m_WalkSpeed: 4.5
+  m_SprintSpeed: 7.5
+  m_Acceleration: 16
+  m_Deceleration: 20
+  m_JumpHeight: 0.75
+  m_Gravity: -32
+  m_FallGravityMultiplier: 1.3
+  m_TerminalVelocity: -45
+  m_StickToGroundForce: -3
+  m_GroundCheckRadius: 0.28
+  m_GroundCheckOffset: 0.15
+  m_GroundLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_WalkStepDistance: 2
+  m_SprintStepDistance: 1.4
