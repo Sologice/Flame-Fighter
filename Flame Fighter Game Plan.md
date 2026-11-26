@@ -90,19 +90,6 @@ A solo dev should lean on a small, consistent kit of low-poly assets and a few s
 - **Audio:** fire loops at three intensities, spray loop, steam hiss, wind, creaking trees, footsteps on dirt and leaves, a low drone, and a few stingers. Free or licensed sound libraries cover most of it.
 - **UI:** minimal. A water gauge and short tutorial prompts, styled to fit the low-poly look.
 
-## Milestone roadmap
-
-About 10 to 12 weeks for a solo developer, each milestone ending in something playable.
-
-1. **Weeks 1 to 2, hose and fire prototype.** Grey-box scene, first-person controller, spray particles, one burning object that drains when hit. Gate: spraying a fire feels good.
-2. **Weeks 3 to 4, fire spreading.** Flammable component, spread logic, burn percentage, win and lose checks on a test patch of trees. Gate: spread is readable and winnable.
-3. **Weeks 5 to 6, map and Stage 1.** Block out the full forest, place authored fires, build the tutorial beats and prompts. Gate: a new player finishes Stage 1 without help.
-4. **Weeks 7 to 8, Stage 2 systems.** Limited tank, water sources, set pieces, difficulty tuning. Gate: Stage 2 is tense but fair.
-5. **Weeks 9 to 10, art and atmosphere pass.** Replace grey-box with low-poly assets, lighting, fog, post-processing, full audio. Gate: it reads as a horror game.
-6. **Weeks 11 to 12, polish and release.** Performance pass, menus, pause, settings, bug fixing, playtests, build and store page.
-
-If time runs short, cut set pieces and extra props first, never the hose feel or the fire spread.
-
 ## Risks and open questions
 
 The biggest risks are fire performance and a hose that feels flat; the open questions below are the next round of grilling.
@@ -114,13 +101,3 @@ The biggest risks are fire performance and a hose that feels flat; the open ques
 - **Hose feel:** a weak spray ruins the whole game. Mitigation: prototype it first and iterate on sound, particles and camera kick.
 - **Scope creep:** extra mechanics and assets. Mitigation: the cut order in the roadmap.
 
-**Open questions to answer next**
-
-- [ ] Is there any story, or is it purely atmosphere and gameplay?
-- [ ] Should smoke depend only on total burn percentage, or also get thicker near individual large fires?
-- [ ] Is wind a factor in spread, and does it change during the game?
-- [ ] How big is the map: a compact clearing or a walkable forest of several minutes across?
-- [ ] Target platform: PC only, or also consoles and mobile?
-- [ ] Will you make the assets yourself or use asset packs?
-- [ ] Controls: keyboard and mouse only, or controller support too?
-- [ ] Is there a title screen, a checkpoint system or an ending cutscene?
