@@ -1,18 +1,22 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Camera cam;
 
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float moveSpeed = 50f;
     [SerializeField] private Vector2 moveInput;
+
+    [Header("Rotation Settings")]
+    [SerializeField] private Vector3 rot;
+    [SerializeField] private float rotXMin = -45;
+    [SerializeField] private float rotXMax = 15;
 
     private void Start()
     {
         if (cam == null)
-            cam = GetComponent<Camera>();
+            cam = GetComponentInChildren<Camera>();
     }
 
     private void FixedUpdate()
@@ -39,8 +43,10 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = moveSpeed * Time.fixedDeltaTime * InputManager.Instance.MoveInput;
 
-        transform.Rotate(moveInput.x, moveInput.y, 0f);
+        rot.x = Mathf.Clamp(rot.x - moveInput.y, rotXMin, rotXMax);
+        rot.y += moveInput.x;
+        transform.localRotation = Quaternion.Euler(rot);
 
-        Debug.Log($"Moving by {(moveInput, 0f)}");
+        // Debug.Log($"Moving by {(moveInput, 0f)}");
     }
 }
