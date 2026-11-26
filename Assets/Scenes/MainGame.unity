@@ -386,6 +386,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1731948662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1731948664}
+  - component: {fileID: 1731948663}
+  m_Layer: 0
+  m_Name: FireGridManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1731948663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731948662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c3b8cad05e0a34cbecdcb11d71221c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireGridSpawner
+  gridWidth: 10
+  gridHeight: 10
+  tileSize: 1
+  yOffset: 0
+  centerGrid: 1
+  tileLayerName: Tile
+  unlitMaterial: {fileID: 2100000, guid: 54498bb0ff20bf6449eb875759ee09a3, type: 2}
+  burningMaterial: {fileID: 2100000, guid: 75916773e2cd2134cb871fb63ee1bb08, type: 2}
+  extinguishedMaterial: {fileID: 2100000, guid: ed0a88138c788c744a70fa3d9b51c3f3, type: 2}
+  burnedOutMaterial: {fileID: 2100000, guid: 90494a817dfea394d9509d53673695e3, type: 2}
+  fireVfxPrefab: {fileID: 0}
+  initialBurnCount: 5
+  checkInterval: 5
+  newFireSpawnCount: 1
+  spreadChancePerTile: 0.5
+  spreadDiagonally: 0
+  maxSpreadNeighborsPerTile: 1
+  maxStressLevel: 100
+  resumeStressThreshold: 50
+  stressIncreasePerBurningTilePerSec: 1.5
+  stressDecreaseOnExtinguish: 10
+  stressDecayPerSecWhenPaused: 4
+  currentStressLevel: 0
+  isSpawnerActive: 1
+  activeBurningCount: 0
+--- !u!4 &1731948664
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731948662}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.48195, y: 0, z: -11.43337}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805863025
 GameObject:
   m_ObjectHideFlags: 0
@@ -4147,3 +4216,4 @@ SceneRoots:
   - {fileID: 1805863027}
   - {fileID: 410841462}
   - {fileID: 343606416}
+  - {fileID: 1731948664}

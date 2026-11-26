@@ -27,7 +27,7 @@ namespace FlameFighter.Fire
         [SerializeField] private float m_MaxFuel = 60f;
 
         [Tooltip("Initial burn state on spawn.")]
-        [SerializeField] private BurnState m_InitialState = BurnState.Burning;
+        [SerializeField] private BurnState m_InitialState = BurnState.Unlit;
 
         [Tooltip("Time in seconds an extinguished object remains wet before nearby flames can reignite it.")]
         [SerializeField] private float m_ReignitionCooldown = 6f;
@@ -38,32 +38,63 @@ namespace FlameFighter.Fire
         private BurnState m_State;
         private float m_CooldownTimer;
         private Collider m_Collider;
+        private bool m_IsInitialized;
 
         // Public Events
         public event Action<Flammable> OnIgnited;
         public event Action<Flammable> OnExtinguished;
         public event Action<Flammable> OnBurnedOut;
-        public event Action<Vector3, bool> OnHitByWater; // Vector3 hitPoint, bool isBaseHit
+        public event Action<Vector3, bool> OnHitByWater;
 
         // Public Properties
         public BurnState State => m_State;
         public bool IsBurning => m_State == BurnState.Burning;
+        public bool IsBurnedOut => m_State == BurnState.BurnedOut;
+        public float CooldownRemaining => m_CooldownTimer;
         public float FireHealthRatio => m_MaxFireHealth > 0f ? Mathf.Clamp01(m_CurrentFireHealth / m_MaxFireHealth) : 0f;
         public float FuelRatio => m_MaxFuel > 0f ? Mathf.Clamp01(m_CurrentFuel / m_MaxFuel) : 0f;
         public float FireIntensity => (m_State == BurnState.Burning) ? Mathf.Min(FireHealthRatio, 1f) : 0f;
 
+        /// <summary>
+        /// Mengecek apakah petak ini valid untuk dibakar kembali.
+        /// </summary>
+        public bool CanIgnite
+        {
+            get
+            {
+                if (m_State == BurnState.Burning || m_State == BurnState.BurnedOut)
+                    return false;
+
+                if (m_State == BurnState.Extinguished && m_CooldownTimer > 0f)
+                    return false;
+
+                return true;
+            }
+        }
+
         private void Awake()
         {
             m_Collider = GetComponent<Collider>();
-            m_CurrentFuel = m_MaxFuel;
-
-            if (m_InitialState == BurnState.Burning)
+            if (!m_IsInitialized)
             {
+                Initialize(m_InitialState);
+            }
+        }
+
+        public void Initialize(BurnState startState)
+        {
+            m_IsInitialized = true;
+            m_CurrentFuel = m_MaxFuel;
+            m_CooldownTimer = 0f;
+
+            if (startState == BurnState.Burning)
+            {
+                m_State = BurnState.Unlit;
                 Ignite();
             }
             else
             {
-                m_State = m_InitialState;
+                m_State = startState;
                 m_CurrentFireHealth = 0f;
             }
         }
@@ -72,7 +103,6 @@ namespace FlameFighter.Fire
         {
             if (m_State == BurnState.Burning)
             {
-                // Consume fuel
                 m_CurrentFuel -= Time.deltaTime;
                 if (m_CurrentFuel <= 0f)
                 {
@@ -82,7 +112,6 @@ namespace FlameFighter.Fire
             }
             else if (m_State == BurnState.Extinguished)
             {
-                // Count down wetness cooldown
                 if (m_CooldownTimer > 0f)
                 {
                     m_CooldownTimer -= Time.deltaTime;
@@ -91,12 +120,11 @@ namespace FlameFighter.Fire
         }
 
         /// <summary>
-        /// Ignites this flammable object.
+        /// Menyalakan api pada objek ini jika valid.
         /// </summary>
         public bool Ignite()
         {
-            if (m_State == BurnState.BurnedOut) return false;
-            if (m_State == BurnState.Extinguished && m_CooldownTimer > 0f) return false;
+            if (!CanIgnite) return false;
 
             m_State = BurnState.Burning;
             m_CurrentFireHealth = m_MaxFireHealth;
@@ -105,14 +133,12 @@ namespace FlameFighter.Fire
         }
 
         /// <summary>
-        /// Applies water stream damage to the fire.
-        /// Returns true if hit resulted in extinguishing the fire.
+        /// Memberikan damage air untuk memadamkan api.
         /// </summary>
         public bool Extinguish(float damage, Vector3 hitPoint, float baseBonusMultiplier = 1.75f)
         {
             if (m_State != BurnState.Burning) return false;
 
-            // Check if hitting the base of the fire
             bool isBaseHit = CheckIsBaseHit(hitPoint);
             float finalDamage = damage * (isBaseHit ? baseBonusMultiplier : 1.0f);
 
@@ -155,9 +181,9 @@ namespace FlameFighter.Fire
 
         public void ForceExtinguish()
         {
+            if (m_State != BurnState.Burning) return;
             m_CurrentFireHealth = 0f;
             SetExtinguished();
         }
     }
 }
-
